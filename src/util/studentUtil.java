@@ -5,10 +5,10 @@ import beans.Student;
 
 public class studentUtil {
     public static Student fillStudent () {
-        String name = inputUtil.requireString("Please enter name:");
-        String surname = inputUtil.requireString("Please enter surname");
-        int age = inputUtil.requireNumber("Please enter age");
-        String className = inputUtil.requireString("Please enter class");
+        String name = MenuUtil.requireName();
+        String surname = MenuUtil.requireSurname();
+        int age = MenuUtil.requireAge();
+        String className = MenuUtil.requireClassname();
 
         Student st = new Student(name, surname, age, className);
         return st;
@@ -21,7 +21,7 @@ public class studentUtil {
 
         for (int i=0; i<Config.students.length; i++) {
             Student st = Config.students[i];
-            System.out.println(st.getFullInfo());
+            System.out.println((i+1) + " " + st.getFullInfo());
         }
     }
 
@@ -34,7 +34,7 @@ public class studentUtil {
 
             Config.students[i] = studentUtil.fillStudent();;
         }
-        System.out.println("registration completed successfully");
+        MenuUtil.showSuccessOpMessage();
         studentUtil.printAllRegisteredStudents();
     }
 
@@ -64,5 +64,38 @@ public class studentUtil {
             }
         }
         return result;
+    }
+
+    public static void updateStudentWithNewObject () {
+        studentUtil.printAllRegisteredStudents();
+
+        int i = inputUtil.requireNumber("enter index of student, which you want to update");
+
+        System.out.println("enter the new infos");
+        Student s = studentUtil.fillStudent();
+
+        Config.students[i-1] = s;
+    }
+
+    public static void updateStudentWithSameObject () {
+        studentUtil.printAllRegisteredStudents();
+
+        int i = inputUtil.requireNumber("enter index of student, which you want to update");
+
+        Student selectedStudent = Config.students[i-1];
+        String changeParams = inputUtil.requireString("enter params like this: 'name','surname','age','classname'");
+
+        if (changeParams.contains("'name'")) {
+            selectedStudent.setName(inputUtil.requireString("enter name"));
+        }
+        if (changeParams.contains("'surname'")) {
+            selectedStudent.setSurname(inputUtil.requireString("enter surname"));
+        }
+        if (changeParams.contains("'age'")) {
+            selectedStudent.setAge(inputUtil.requireNumber("enter age"));
+        }
+        if (changeParams.contains("'classname'")) {
+            selectedStudent.setClassName(inputUtil.requireString("enter class name"));
+        }
     }
 }

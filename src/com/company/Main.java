@@ -1,9 +1,7 @@
 package com.company;
 
-import beans.Config;
-import beans.Student;
+import util.MenuUtil;
 import util.inputUtil;
-import util.studentUtil;
 
 public class Main {
 
@@ -17,20 +15,7 @@ public class Main {
                     + "\n3. Find student"
                     + "\n4. Update student"
                     + "\n5. Exit");
-
-            if (menu == 1) {
-                studentUtil.registerStudent();
-            } else if (menu == 2) {
-                studentUtil.printAllRegisteredStudents();
-            } else if (menu == 3) {
-                studentUtil.findStudentsAndPrint();
-            } else if (menu == 4) {
-
-            } else if (menu == 5) {
-                break;
-            } else {
-                System.out.println("the entered number is wrong");
-            }
+            MenuUtil.processMenu(menu);
         }
     }
 }
